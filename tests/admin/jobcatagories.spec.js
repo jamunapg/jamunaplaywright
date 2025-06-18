@@ -1,4 +1,4 @@
-import{test,expect,} from "@playwright/test"
+import{test,expect} from "@playwright/test"
 import data from"../../testData/login.json"
 test("verify admin and add jobcatogaries",async({page})=>{   
 
