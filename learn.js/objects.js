@@ -30,7 +30,7 @@ Menuitems ={
 
  for (let item in Menuitems){
  console.log("loop starts")
- console.log(menuitems[item])
+ console.log(item)
        console.log("loop Ends")
  
  }
