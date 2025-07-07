@@ -1,6 +1,13 @@
 {
 "username": "Admin",
 "password": "admin123",
-"job-catogaries-name":"QA Engineer"
+"jobtitlename":"QA Engineer",
+"wrongusername":"hffyuk",
+"wrongpassword":"ftugvj",
+"firstname":"jamuna",
+"lastname":"jammu",
+"paygradename" : "grade1"
+
 
 }
+

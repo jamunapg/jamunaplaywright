@@ -1,34 +1,32 @@
-import {test, expect}from '@playwright/test';
+import { test, expect } from '@playwright/test'
+import { loginpage } from "../PageObjectModel/loginpage.po"
 import logindata from "../testData/login.json"
-test("verify login with valid credential",async({page})=>{
-await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-await page.locator("input[name='username']").fill("Admin")
-await page.locator("input[type='password']").fill("admin123")
-await page.locator("button[type='submit']").click()
-//await expect(page).toHaveURL("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index")
-})
-
-test("verify login with valid username,invalid password",async({page})=>{
-await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-await page.locator("input[name='username']").fill("Admin")
-await page.locator("input[type='password']").fill("admin245")
-await page.locator("button.oxd-button.oxd-button--medium").click()
-await expect(page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']")).toBeVisible()
-})
-
-test("verify login with invalid username,valid password",async({page})=>{
-await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-await page.locator("input[name='username']").fill("hfrifhi")
-await page.locator("input[type='password']").fill("admin123")
-await page.locator("button.oxd-button.oxd-button--medium").click()
-await expect(page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']")).toBeVisible()
-})
 
 
-test("verify login with invalid username,invalid password",async({page})=>{
-await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
-await page.locator("input[name='username']").fill("hfrifhi")
-await page.locator("input[type='password']").fill("admin173")
-await page.locator("button.oxd-button.oxd-button--medium").click()
-await expect(page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']")).toBeVisible()
-})
+let page
+let login
+
+test.describe("verify login functionality", async () => {
+    test.beforeEach(async ({ browser }) => {
+        page = await browser.newPage()
+        login = new loginpage(page)
+        await login.lounchurl()
+    })
+    test("verifylogin with valid credential", async ({ page }) => {
+        await login.loginwithvalidcreds(logindata.username, logindata.password)
+        await login.loginSucces()
+    })
+    test("verifylogin with valid username invalidpassword", async ({ page }) => {
+        await login.loginwithvalidcreds(logindata.username, logindata.wrongpassword)
+        await login.loginErr()
+    })
+    test("verifylogin with invalid username validpassword", async ({ page }) => {
+        await login.loginwithvalidcreds(logindata.wrongusername, logindata.password)
+        await login.loginErr()
+    })
+    test("verifylogin with invalid username invalidpassword", async ({ page }) => {
+        await login.loginwithvalidcreds(logindata.wrongusername, logindata.wrongpassword)
+        await login.loginErr()
+    })
+
+}) 
